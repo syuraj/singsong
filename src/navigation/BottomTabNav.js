@@ -25,11 +25,11 @@ function BottomTabNav(props) {
 		return ({ focused, color }) => {
 			switch (route) {
 				case 'Tracks':
-					return <Icon name="music" type="feather" size={focused ? 26 : 23} color={color} />;
+					return <Icon name="message-circle" type="feather" size={focused ? 26 : 23} color={color} />;
 				case 'Search':
-					return <Icon name="search" type="feather" size={focused ? 26 : 23} color={color} />;
+					return <Icon name="mic" type="feather" size={focused ? 26 : 23} color={color} />;
 				case 'Library':
-					return <Icon name="archive" type="feather" size={focused ? 26 : 23} color={color} />;
+					return <Icon name="user" type="feather" size={focused ? 26 : 23} color={color} />;
 			}
 		};
 	}
