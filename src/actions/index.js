@@ -1,4 +1,5 @@
 export * from './getMedia';
+export * from './getChallenges';
 export * from './playerFooter';
 export * from './playback';
 export * from './playlist';

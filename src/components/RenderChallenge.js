@@ -9,7 +9,7 @@ const placeholder = require('../../assets/placeholder.jpg')
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 
-const RenderTrack = React.memo(
+const RenderChallenge = React.memo(
 	(props) => {
 		const { item, currentTrack, setCurrentTrack, setOptions, theme } = props
 
@@ -50,7 +50,7 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, actions)(withTheme(RenderTrack))
+export default connect(mapStateToProps, actions)(withTheme(RenderChallenge))
 
 const MainWrapper = styled.View`
 	flex-direction: row;

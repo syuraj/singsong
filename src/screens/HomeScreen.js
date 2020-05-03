@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { View, Animated, TouchableOpacity, Dimensions, StatusBar } from 'react-native'
 import styled from 'styled-components/native'
-import TrackPlayer from 'react-native-track-player'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import QuickScrollList from 'react-native-quick-scroll'
-import setupPlayer from '../services/SetupPlayer'
 import RenderActivityIndicator from '../components/RenderActivityIndicator'
-import RenderTrack from '../components/RenderTrack'
-import OptionsModal from '../components/OptionsModal'
+import RenderChallenge from '../components/RenderChallenge'
 import Icon from '../components/Icon'
 import { flatListItemLayout } from '../utils/FlatListLayout'
 import { scanMessage } from '../constants'
@@ -21,10 +18,9 @@ const BottomTabHeight = 49
 const ViewportHeight = ScreenHeight - (StatusBarHeight + FooterHeight + BottomTabHeight)
 const itemHeight = 75
 
-function TracksScreen(props) {
+function HomeScreen(props) {
 	const [scrollY] = useState(new Animated.Value(0))
-	const [modal, setModal] = useState({ visible: false, item: {} })
-	const { currentTrack } = props
+	const { challenges, challengesLoaded } = props
 
 	useEffect(() => {
 		let unsubscribe = props.navigation.addListener('focus', props.showFooter)
@@ -32,11 +28,9 @@ function TracksScreen(props) {
 	}, [props.navigation])
 
 	useEffect(() => {
-		props.getMedia()
-		setupPlayer().then(() => currentTrack.id !== '000' && TrackPlayer.add(currentTrack))
+		props.getChallenges()
 	}, [])
 
-	const renderMargin = currentTrack.id !== '000' ? { marginBottom: 60, flex: 1 } : { flex: 1 }
 	const AnimatedIcon = Animated.createAnimatedComponent(StyledIcon)
 	const headerHeight = scrollY.interpolate({
 		inputRange: [0, 40],
@@ -44,30 +38,25 @@ function TracksScreen(props) {
 		extrapolate: 'clamp',
 	})
 
-	const mediaLoaded = true
-	const media = [{ id: 'some id', title: 'some title' }]
-
-	if (mediaLoaded) {
-		if (media.length > 0) {
+	if (challengesLoaded) {
+		if (challenges.length > 0) {
 			return (
-				<View style={renderMargin}>
+				<View style={{ flex: 1 }}>
 					<QuickScrollList
 						keyExtractor={(asset) => asset.id.toString()}
-						data={media}
-						renderItem={({ item }) => <RenderTrack item={item} setOptions={setModal} />}
+						data={challenges}
+						renderItem={({ item }) => <RenderChallenge item={item} />}
 						getItemLayout={flatListItemLayout}
 						onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
 							useNativeDriver: false,
 						})}
 						scrollEventThrottle={16}
 						contentContainerStyle={styles.flatlistContent}
-						initialScrollIndex={currentTrack.index || undefined}
 						itemHeight={itemHeight}
 						viewportHeight={ViewportHeight}
 						rightOffset={10}
 						thumbStyle={styles.thumbStyle}
 					/>
-					<OptionsModal selectedTrack={modal.item} isVisible={modal.visible} onPressCancel={() => setModal({ ...modal, visible: false })} />
 					<Animated.View style={[styles.header, { height: headerHeight }]}>
 						<TouchableOpacity onPress={() => props.navigation.navigate('settings')}>
 							<AnimatedIcon {...styles.settingsIcon} />
@@ -78,7 +67,7 @@ function TracksScreen(props) {
 		}
 		return (
 			<MessageWrapper>
-				<Message numberOfLines={2}>{"Oops! SoundSpice couldn't find any music on your device"}</Message>
+				<Message numberOfLines={2}>{"Oops! You don't have any challenges yet"}</Message>
 			</MessageWrapper>
 		)
 	}
@@ -88,13 +77,12 @@ function TracksScreen(props) {
 
 function mapStateToProps(state) {
 	return {
-		currentTrack: state.playback.currentTrack,
-		media: state.media.mediaFiles,
-		mediaLoaded: state.media.mediaLoaded,
+		challenges: state.challenges.challenges,
+		challengesLoaded: state.challenges.challengesLoaded,
 	}
 }
 
-export default connect(mapStateToProps, actions)(TracksScreen)
+export default connect(mapStateToProps, actions)(HomeScreen)
 
 const StyledIcon = styled(Icon)`
 	color: ${contrastColor};
