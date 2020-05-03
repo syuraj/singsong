@@ -9,45 +9,25 @@ const placeholder = require('../../assets/placeholder.jpg')
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 
-const RenderChallenge = React.memo(
-	(props) => {
-		const { item, currentTrack, setCurrentTrack, setOptions, theme } = props
+function RenderChallenge(props) {
+	const { item, acceptHandler, rejectHandler } = props
 
-		console.log('printing item', item)
-
-		function onTrackPress() {
-			if (item.id !== currentTrack.id) setCurrentTrack(item)
-		}
-
-		const coverSrc = item.artwork ? { uri: item.artwork } : placeholder
-		return (
-			<Touchable onPress={onTrackPress} background={Touchable.Ripple(`${theme.contrastTrans}0.1)`, false)}>
-				<MainWrapper>
-					<Thumbnail source={coverSrc} />
-					<TextWrapper>
-						<Title numberOfLines={1} current={item.id === currentTrack.id}>
-							{item.title}
-						</Title>
-						<Artist numberOfLines={1}>{item.artist}</Artist>
-					</TextWrapper>
-					<StyledIcon {...optionsIcon} onPress={() => setOptions({ visible: true, item })} />
-				</MainWrapper>
-			</Touchable>
-		)
-	},
-	(prevProps, nextProps) =>
-		!(
-			nextProps.currentTrack.id === nextProps.item.id ||
-			prevProps.currentTrack.id === prevProps.item.id ||
-			prevProps.item !== nextProps.item ||
-			prevProps.currentTheme !== nextProps.currentTheme
-		),
-)
+	const coverSrc = item.artwork ? { uri: item.artwork } : placeholder
+	return (
+		<MainWrapper>
+			<Thumbnail source={coverSrc} />
+			<TextWrapper>
+				<Title numberOfLines={1}>{item.title}</Title>
+				<Artist numberOfLines={1}>{item.artist}</Artist>
+			</TextWrapper>
+			<StyledIcon {...rejectIcon} onPress={rejectHandler} />
+			<StyledIcon {...acceptIcon} onPress={acceptHandler} />
+		</MainWrapper>
+	)
+}
 
 function mapStateToProps(state) {
-	return {
-		currentTrack: state.playback.currentTrack,
-	}
+	return {}
 }
 
 export default connect(mapStateToProps, actions)(withTheme(RenderChallenge))
@@ -90,11 +70,17 @@ const Artist = styled.Text`
 
 const StyledIcon = styled(Icon)`
 	color: ${contrastTransColor(0.75)};
-	padding: 10px;
+	padding: 15px;
 `
 
-const optionsIcon = {
-	name: 'more-vertical',
+const acceptIcon = {
+	name: 'check-circle',
 	type: 'feather',
-	size: 25,
+	size: 40,
+}
+
+const rejectIcon = {
+	name: 'trash-2',
+	type: 'feather',
+	size: 30,
 }

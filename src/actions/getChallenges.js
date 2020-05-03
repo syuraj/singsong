@@ -13,12 +13,22 @@ export const getChallenges = () => async (dispatch) => {
 const getChallengesWithCovers = async () => {
 	return [
 		{
-			id: 'mediaFiles[i].duration + i',
+			id: '1',
 			duration: '10',
 			url: 'mediaFiles[i].path',
-			title: 'Challenge from Suraj',
+			title: 'Song Challenge from Suraj',
 			// artwork: 'mediaFiles[i].cover || null',
-			artist: 'unknown',
+			artist: 'Start a song from letter S',
+			album: 'unknown',
+			index: 'i',
+			folder: 'folderName',
+		},
+		{
+			id: '2',
+			duration: '10',
+			title: 'Song Challenge from Pankaj',
+			// artwork: 'mediaFiles[i].cover || null',
+			artist: 'Start a song from letter A',
 			album: 'unknown',
 			index: 'i',
 			folder: 'folderName',

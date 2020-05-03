@@ -45,7 +45,7 @@ function HomeScreen(props) {
 					<QuickScrollList
 						keyExtractor={(asset) => asset.id.toString()}
 						data={challenges}
-						renderItem={({ item }) => <RenderChallenge item={item} />}
+						renderItem={({ item }) => <RenderChallenge item={item} acceptHandler={acceptHandler} rejectHandler={rejectHandler} />}
 						getItemLayout={flatListItemLayout}
 						onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
 							useNativeDriver: false,
@@ -73,6 +73,14 @@ function HomeScreen(props) {
 	}
 
 	return <RenderActivityIndicator text={scanMessage} />
+}
+
+function acceptHandler() {
+	console.log('inside acceptHandler')
+}
+
+function rejectHandler() {
+	console.log('inside rejectHandler')
 }
 
 function mapStateToProps(state) {

@@ -35,7 +35,7 @@ function BottomTabNav(props) {
 	}
 
 	return (
-		<BottomTabs.Navigator initialRouteName="Tracks" backBehavior="initialRoute" tabBarOptions={tabBarOptions} lazy={false}>
+		<BottomTabs.Navigator initialRouteName="Home" backBehavior="initialRoute" tabBarOptions={tabBarOptions} lazy={false}>
 			<BottomTabs.Screen
 				name="Home"
 				component={HomeScreen}
