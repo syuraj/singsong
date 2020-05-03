@@ -1,5 +1,5 @@
 {
-	"name": "vynilla",
+	"name": "singsong",
 	"version": "3.0.0",
 	"private": true,
 	"scripts": {
@@ -26,6 +26,7 @@
 		"react": "16.11.0",
 		"react-native": "0.62.1",
 		"react-native-dialog": "^5.6.0",
+		"react-native-dotenv": "^0.2.0",
 		"react-native-draggable-flatlist": "^2.3.2",
 		"react-native-gesture-handler": "^1.6.1",
 		"react-native-get-music-files": "git+https://github.com/cinder92/react-native-get-music-files.git#master",

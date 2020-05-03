@@ -1,6 +1,6 @@
 
 
-# PACKAGE_NAME="com.vynilla.beta"
+# PACKAGE_NAME="com.singsong.beta"
 # PROJECT_NAME=
 # BETA_APP_NAME=""
 TIME_STAMP=$(date +%s)

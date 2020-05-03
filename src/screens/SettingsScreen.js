@@ -39,7 +39,7 @@ function SettingsScreen(props) {
 
 	function onPressShare() {
 		Share.open({
-			message: 'Hey! Check out SoundSpice\nhttps://play.google.com/store/apps/details?id=com.vynilla',
+			message: 'Hey! Check out SoundSpice\nhttps://play.google.com/store/apps/details?id=com.singsong',
 		})
 	}
 
